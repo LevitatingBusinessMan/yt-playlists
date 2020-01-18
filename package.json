@@ -1,0 +1,9 @@
+{
+  "name": "yt-playlists",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "keywords": ["youtube", "playlists", "yt"],
+  "author": "",
+  "license": "MIT"
+}
