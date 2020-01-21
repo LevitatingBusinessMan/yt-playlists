@@ -20,12 +20,20 @@ module.exports = KEY => {
         };
 
         class Listing extends Array {
-            constructor(items, nextPageToken) {
-                //Set best thumbnail
-                items.map(v => v.snippet.thumbnails.best = bestThumbnail(v.snippet.thumbnails));
+            constructor(...items) {
 
-                super(...items)
-                this.nextPageToken = nextPageToken;
+                //Set best thumbnail
+                items.map(v => {
+                    if (v.snippet)
+                        v.snippet.thumbnails.best = bestThumbnail(v.snippet.thumbnails)
+                });
+
+                super(...items);
+            }
+
+            token(token) {
+                this.nextPageToken = token;
+                return this;
             }
         
             fetchMore() {
@@ -83,7 +91,7 @@ module.exports = KEY => {
                             thumbnail: bestThumbnail(data.items[0].snippet.thumbnails),
                             length: data.pageInfo.totalResults,
                             etag: data.etag,
-                            items: new Listing(data.items, data.nextPageToken)
+                            items: (new Listing(...data.items)).token(data.nextPageToken)
                         })
                 })
             })
