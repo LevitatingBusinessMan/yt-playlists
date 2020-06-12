@@ -117,6 +117,8 @@ module.exports = KEY => {
                 res.on('data', d => data += d.toString())
                 res.on('end', () => {
                     data = JSON.parse(data);
+                    if (!data.items)
+                    	return reject(data); 	
                     resolve(data.items[0])
                 })
             })
